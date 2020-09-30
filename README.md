@@ -6,4 +6,7 @@ author: '@Gautam-flash'
 
 
 # Deep_meme
-A deep learning repo
+
+![Deep meme GIF](file/deep_meme-teaser-min.gif)
+
+⏫ This is one of the things you will be able to do by following this workshop even with your image or video.
