@@ -31,20 +31,13 @@ Now we can <s>create</s> synthesise completely fake media file that look legit a
 
 <b>The tools/resources we are going to use are :</b>
 
--Your own google account 😁
-
--[Google Colab](https://colab.research.google.com/)
-
--python3 (included in colab)
-
--PyTorch library (included in colab but we need to ensure version 1.0.0)
-
--First-order-motion [model](https://github.com/AliaksandrSiarohin/first-order-model) (one of the most important)
-
--Google Drive
-
--Driving video (you can use your own or one of the demos)
-
--subject image(s) (again you can use your own, or from the demos)
+- Your own google account 😁
+- [Google Colab](https://colab.research.google.com/)
+- python3 (included in colab)
+- PyTorch library (included in colab but we need to ensure version 1.0.0)
+- First-order-motion [model](https://github.com/AliaksandrSiarohin/first-order-model) (one of the most important)
+- Google Drive
+- Driving video (you can use your own or one of the demos)
+- subject image(s) (again you can use your own, or from the demos)
 
 Google Colab: It is a service provided by googlle where you can run your intensive codes on a powerful machine (you get GPU, good processor, enough RAM even TPU, you can choose the combination). When you open it, you will see the following screen.
