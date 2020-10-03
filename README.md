@@ -40,4 +40,7 @@ Now we can <s>create</s> synthesise completely fake media file that look legit a
 - Driving video (you can use your own or one of the demos)
 - subject image(s) (again you can use your own, or from the demos)
 
-Google Colab: It is a service provided by googlle where you can run your intensive codes on a powerful machine (you get GPU, good processor, enough RAM even TPU, you can choose the combination). When you open it, you will see the following screen.
+Google Colab: It is a service provided by google where you can run your intensive codes on a powerful machine (you get GPU, good processor, enough RAM even TPU, you can choose the combination). When you open it, you will see the following screen.
+Log in with your Google account.
+
+Click on <b>files</b> and select <b>new notebook</b>.
