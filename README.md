@@ -61,20 +61,20 @@ Belove are some snippets of code which you just have to copy and paste in your c
 cell-1 
 Deep learning is not very easy, in order to make it easy we are going to copy pre-trained checkpoints from Aliaksandr Siarohin (creator of first order motion) so that we get some pre-trained data.
 
-'''jupyter-notebook
+'''
 !git clone https://github.com/AliaksandrSiarohin/first-order-model
 '''
 cell-2
 
 navigating to the right directory.
-'''jupyetr-notebook
+'''python
 cd first-order-model
 '''
 
 cell-3
 
 We have our resources in GDrive but we need to use those here in colab, so we are going to link both.
-'''jupyter-notebook
+'''
 from google.colab import drive
 drive.mount('/content/gdrive')
 '''
