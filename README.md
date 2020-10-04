@@ -59,6 +59,7 @@ Notice how I have another tab with my GDrive open, a good practice.
 Belove are some snippets of code which you just have to copy and paste in your colab cells and execute, a small explanation is given.
 
 cell-1 
+
 Deep learning is not very easy, in order to make it easy we are going to copy pre-trained checkpoints from Aliaksandr Siarohin (creator of first order motion) so that we get some pre-trained data.
 
 ```jupyter-notebook
@@ -78,3 +79,134 @@ We have our resources in GDrive but we need to use those here in colab, so we ar
 from google.colab import drive
 drive.mount('/content/gdrive')
 ```
+<b> Note that in this step you will have to click on the given link, allow permission for GDrive and copy the verification code which you will have to paste in the input prompt </b>
+
+cell-3
+
+Loading the driving video, subject image and libraries.
+
+```python
+import imageio
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.animation as animation
+from skimage.transform import resize
+from IPython.display import HTML
+import warnings
+warnings.filterwarnings("ignore")
+
+source_image = imageio.imread('/content/gdrive/My Drive/first-order-motion-model/02.png')
+reader = imageio.get_reader('/content/gdrive/My Drive/first-order-motion-model/04.mp4')
+
+
+#Resize image and video to 256x256
+
+source_image = resize(source_image, (256, 256))[..., :3]
+
+fps = reader.get_meta_data()['fps']
+driving_video = []
+try:
+    for im in reader:
+        driving_video.append(im)
+except RuntimeError:
+    pass
+reader.close()
+
+driving_video = [resize(frame, (256, 256))[..., :3] for frame in driving_video]
+
+def display(source, driving, generated=None):
+    fig = plt.figure(figsize=(8 + 4 * (generated is not None), 6))
+
+    ims = []
+    for i in range(len(driving)):
+        cols = [source]
+        cols.append(driving[i])
+        if generated is not None:
+            cols.append(generated[i])
+        im = plt.imshow(np.concatenate(cols, axis=1), animated=True)
+        plt.axis('off')
+        ims.append([im])
+
+    ani = animation.ArtistAnimation(fig, ims, interval=50, repeat_delay=1000)
+    plt.close()
+    return ani
+    
+
+HTML(display(source_image, driving_video).to_html5_video())
+```
+
+You will get a weird ouput, don't get afraid if the output is bad because the machine is in learning state.
+
+cell-4
+
+We are now loading the checkpoints which were pre-trained by the creator to help our model learn.
+
+```python
+from demo import load_checkpoints
+generator, kp_detector = load_checkpoints(config_path='config/vox-256.yaml', 
+                            checkpoint_path='/content/gdrive/My Drive/first-order-motion-model/vox-cpk.pth.tar')
+```
+
+cell-5
+
+This is the second and final stage of learning
+
+```python
+from demo import make_animation
+from skimage import img_as_ubyte
+
+predictions = make_animation(source_image, driving_video, generator, kp_detector, relative=True)
+
+#save resulting video
+imageio.mimsave('../generated.mp4', [img_as_ubyte(frame) for frame in predictions], fps=fps)
+#video can be downloaded from /content folder
+
+HTML(display(source_image, driving_video, predictions).to_html5_video())
+```
+
+cell-6
+
+Here we are comapring and using relative vs adaptive method so that evrything from the driving video doesn't effect the output. For example Putin haircut will be extended to match Trump's haircut.
+
+```python
+predictions = make_animation(source_image, driving_video, generator, kp_detector, relative=False, adapt_movement_scale=True)
+HTML(display(source_image, driving_video, predictions).to_html5_video())
+```
+#### Training is complete, you have just created a deep learning model.
+cell-7
+
+#### Running on whichever data we like
+Till now we were using source image - 'My Drive/first-order-motion-model/02.png' <i>and</i> driving video -  'My Drive/first-order-motion-model/04.mp4'
+I provided full path as I want you to go to the path in your GDrive and take a look at both. Observe the size and dimensions to have an idea what kind of video and image set it works best on (where should the head be, how much od your body should be visible, how much sould it be moving , etc)
+
+<b>First we need to crop a face from both source image and video, while simple graphic editor like paint can be used for cropping from image. Cropping from video is more complicated. We are using ffpmeg for this. </b>
+
+```python
+!ffmpeg -i /content/gdrive/My\ Drive/first-order-motion-model/07.mkv -ss 00:08:57.50 -t 00:00:08 -filter:v "crop=600:600:760:50" -async 1 hinton.mp4
+```
+
+cell-8
+
+Or you can record an accurate(teh type needed) video of yourself and save it in GDrive and input the path below.
+source_image is whichever image you want to add motion to
+driving_video = is the video you want to mimic.
+
+```python
+source_image = imageio.imread('/content/gdrive/My Drive/first-order-motion-model/09.png')
+driving_video = imageio.mimread('hinton.mp4', memtest=False)
+
+
+#Resize image and video to 256x256
+
+source_image = resize(source_image, (256, 256))[..., :3]
+driving_video = [resize(frame, (256, 256))[..., :3] for frame in driving_video]
+
+predictions = make_animation(source_image, driving_video, generator, kp_detector, relative=True,
+                             adapt_movement_scale=True)
+
+HTML(display(source_image, driving_video, predictions).to_html5_video())
+```
+
+##### Done
+Before the first-order-motion we needed more than 5 images of the target and many different videos of the source to create a deepfake, but this FOM model has changed the game completely for which we should thank <b>Aliaksandr Siarohin</b>.
+
