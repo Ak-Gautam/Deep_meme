@@ -34,7 +34,7 @@ Now we can <s>create</s> synthesise completely fake media file that look legit a
 - Your own google account 😁
 - [Google Colab](https://colab.research.google.com/)
 - python3 (included in colab)
-- PyTorch library (included in colab but we need to ensure version 1.0.0)
+- PyTorch library (included in colab)
 - First-order-motion [model](https://github.com/AliaksandrSiarohin/first-order-model) (one of the most important)
 - Google Drive
 - Driving video (you can use your own or one of the demos)
@@ -206,6 +206,20 @@ predictions = make_animation(source_image, driving_video, generator, kp_detector
 
 HTML(display(source_image, driving_video, predictions).to_html5_video())
 ```
+
+If you decided to record a corret size video and try it, just skip cell-7 we dont need it and change the code in cell 8 <b>from</b>
+```python
+source_image = imageio.imread('/content/gdrive/My Drive/first-order-motion-model/09.png')
+driving_video = imageio.mimread('hinton.mp4', memtest=False)
+```
+
+<b>To</b>
+```python
+source_image = imageio.imread('/content/gdrive/My Drive/first-order-motion-model/09.png')
+driving_video = imageio.mimread('/content/gdrive/My Drive/first-order-motion-model/video-name.mp4', memtest=False)
+```
+#### Error and troubleshooting 
+This is a straight forward process but if you are getting any errors, it might be due to the file name and extensions (images in .png and viddeos in .mp4 or .mkv are supported).
 
 ##### Done
 Before the first-order-motion we needed more than 5 images of the target and many different videos of the source to create a deepfake, but this FOM model has changed the game completely for which we should thank <b>Aliaksandr Siarohin</b>.
