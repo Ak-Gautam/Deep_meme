@@ -40,7 +40,41 @@ Now we can <s>create</s> synthesise completely fake media file that look legit a
 - Driving video (you can use your own or one of the demos)
 - subject image(s) (again you can use your own, or from the demos)
 
+<b>Google drive Setup</b>
+Click on this link https://drive.google.com/drive/folders/1kZ1gCnpfU0BnpdU47pLM_TQ6RypDDqgw?usp=sharing and add teh folder to your google drive. It was created by the creator of "first order motion model" and contains almost all the resources and checkpoints you will need. Check once to confirm you have saved this folder in your drive.
+
+<b>Colab </b>
 Google Colab: It is a service provided by google where you can run your intensive codes on a powerful machine (you get GPU, good processor, enough RAM even TPU, you can choose the combination). When you open it, you will see the following screen.
 Log in with your Google account.
+![colab home screen](file/colab.png)
 
 Click on <b>files</b> and select <b>new notebook</b>.
+You will see something like this 
+![colab-coding-screen](file/empty-colab.png)
+
+You can see a line with a play button, that's called a cell where we write snippets of code and click on the play button to execute it.
+Notice how I have another tab with my GDrive open, a good practice.
+
+### Coding
+Belove are some snippets of code which you just have to copy and paste in your colab cells and execute, a small explanation is given.
+
+cell-1 
+Deep learning is not very easy, in order to make it easy we are going to copy pre-trained checkpoints from Aliaksandr Siarohin (creator of first order motion) so that we get some pre-trained data.
+
+'''jupyter-notebook
+!git clone https://github.com/AliaksandrSiarohin/first-order-model
+'''
+cell-2
+
+navigating to the right directory.
+'''jupyetr-notebook
+cd first-order-model
+'''
+
+cell-3
+
+We have our resources in GDrive but we need to use those here in colab, so we are going to link both.
+'''jupyter-notebook
+from google.colab import drive
+drive.mount('/content/gdrive')
+'''
