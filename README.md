@@ -146,7 +146,7 @@ HTML(display(source_image, driving_video).to_html5_video())
 
 You will get a weird ouput, don't get afraid if the output is bad because the machine is in learning state.
 
-cell-5
+## cell-5
 
 We are now loading the checkpoints which were pre-trained by the creator to help our model learn.
 
