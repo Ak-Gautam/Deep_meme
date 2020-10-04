@@ -87,7 +87,7 @@ drive.mount('/content/gdrive')
 
 
 Writing the code in the notebook will look something like this.
-![Notebook](file/full-fledge-first-model.ipynb - Colaboratory - Google Chrome 04-10-2020 17_13_21.png)
+![Notebook](file/notebook.png)
 
 
 ## cell-4
